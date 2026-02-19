@@ -1,0 +1,46 @@
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+}
+input{
+    padding: 5px;
+    width: 200px;
+    /* rounded: 5px; */
+    border-radius: 50px;
+    border: 3px solid #030303;
+}
+button{
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 100px;
+    height: 35px;
+    border: 3px solid black;
+    border-radius: 90px;
+    font-size: medium;
+    font: message-box;
+    font-variant: small-caps;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.registrationForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    height: fit-content;
+    border: 10px solid #ccc;
+    padding: 20px;
+    background: #89b158a9;
+    /* background-image: url('https: //images.unsplash.com/photo-1573655349936-de6bed86f839?q=80&w=720&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); */
+    background-image: url(image.png);
+}
+.registrationForm input{
+    width: 100%;
+}

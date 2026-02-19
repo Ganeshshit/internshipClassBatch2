@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Age Calculator</title>
+</head>
+
+<body>
+
+    <h2>Age Calculator</h2>
+
+    <input type="number" id="birthYear" placeholder="Enter Birth Year">
+    <button onclick="calculateAge()">Calculate Age</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+
+        function calculateAge() {        // Function
+            const yearInput = document.getElementById("birthYear").value;  // Variable
+
+            if (!yearInput) {
+                document.getElementById("result").textContent = "Please enter year";
+                return;
+            }
+
+            const currentYear = new Date().getFullYear();   // Date
+            const age = currentYear - yearInput;            // Variable calculation
+
+            document.getElementById("result").textContent =
+                "Your Age is: " + age;
+        }
+
+    </script>
+</body>
+
+</html>
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Full Age Calculator</title>
+</head>
+
+<body>
+
+    <h2>Full Age Calculator</h2>
+
+
+    <input type="date" id="dob">
+    <button onclick="calculateAge()">Calculate Age</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+        function calculateAge() {
+
+            const dobInput = document.getElementById("dob").value;
+
+            if (!dobInput) {
+                document.getElementById("result").textContent = "Please select Date of Birth";
+                return;
+            }
+
+            const birthDate = new Date(dobInput);
+            const today = new Date();
+
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
+
+            // Adjust days
+            if (days < 0) {
+                months--;
+                const previousMonth = new Date(
+                    today.getFullYear(),
+                    today.getMonth(),
+                    0
+                ).getDate();
+                days += previousMonth;
+            }
+
+            // Adjust months
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            document.getElementById("result").textContent =
+                "Your Age is: " + years + " Years " +
+                months + " Months " +
+                days + " Days";
+        }
+    </script>
+
+</body>
+
+</html> -->

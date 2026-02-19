@@ -1,0 +1,135 @@
+setInterval is a built-in JavaScript timing function used to run a piece of code repeatedly after a fixed time interval.
+Basic Definition
+
+setInterval executes a function again and again with a specified delay between each execution.
+Syntax
+setInterval(function, delay, arg1, arg2, ...)
+Parameters
+
+function – The code or function you want to run repeatedly.
+
+delay – Time in milliseconds (1000 ms = 1 second).
+
+arg1, arg2… – Optional arguments passed to the function.
+Simple Example
+setInterval(() => {
+  console.log("Hello Ganesh!");
+}, 1000);
+What happens here:
+
+The message prints every 1 second.
+
+It never stops unless you clear it.
+Return Value
+
+setInterval returns an Interval ID (a number).
+
+You use this ID to stop the interval.
+
+const id = setInterval(() => {
+  console.log("Running...");
+}, 2000);
+
+Stopping setInterval
+
+Use clearInterval() with the interval ID.
+
+const id = setInterval(() => {
+  console.log("Hello");
+}, 1000);
+
+setTimeout(() => {
+  clearInterval(id);
+}, 5000);
+
+
+Result:
+Runs every second → stops after 5 seconds.
+
+Real-World Use Cases
+
+Digital clocks
+
+Auto-refresh dashboards
+
+Animations
+
+Polling APIs
+
+Game loops
+
+Notifications
+
+Progress bars
+
+How It Works Internally (Event Loop)
+
+JavaScript calls setInterval.
+
+Browser schedules the function in Web API Timer Queue.
+
+After delay → moved to Callback Queue.
+
+Event Loop pushes it into Call Stack when stack is empty.
+
+Executes repeatedly.
+
+Difference: setInterval vs setTimeout
+Feature	setInterval	setTimeout
+Runs	Repeatedly	Once
+Stop	clearInterval	clearTimeout
+Use Case	Continuous tasks	Delayed task
+Passing Arguments
+function greet(name) {
+  console.log("Hello " + name);
+}
+
+setInterval(greet, 1000, "Ganesh");
+
+Common Mistakes
+1. Forgetting clearInterval
+
+Leads to memory leaks or performance issues.
+
+2. Using Too Small Delay
+setInterval(fn, 1); // Bad
+
+
+Can freeze browser or overload CPU.
+
+3. Overlapping Execution
+
+If the function takes longer than the delay, calls may stack.
+
+Advanced Pattern (Better Alternative Sometimes)
+
+Instead of setInterval, use recursive setTimeout:
+
+function repeat() {
+  console.log("Running...");
+  setTimeout(repeat, 1000);
+}
+repeat();
+
+
+Why better?
+
+Prevents overlapping.
+
+Gives more control.
+
+Key Points to Remember
+
+Time is in milliseconds.
+
+Returns an ID.
+
+Must use clearInterval to stop.
+
+Can cause performance issues if misused.
+
+Runs on Event Loop, not blocking main thread.
+
+In Short
+
+setInterval = Run this code every X milliseconds until I say stop.

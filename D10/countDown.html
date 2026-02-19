@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #111827;
+  font-family: Arial, sans-serif;
+}
+
+.box {
+  background: #1f2933;
+  padding: 40px 60px;
+  border-radius: 12px;
+  color: #22c55e;
+  font-size: 50px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+</style>
+</head>
+
+<body>
+
+    <div class="box">
+        <h1 id="timer">10</h1>
+    </div>
+
+    <script > 
+        let count = 10;   
+
+            function countdown() {  
+                if (count > 0) {
+                    document.getElementById("timer").textContent = count;
+                    count--;
+
+                    setTimeout(countdown, 1000); 
+                } else {
+                    document.getElementById("timer").textContent = "Time Over";
+                }
+            }
+            countdown();
+    </script>
+</body>
+
+</html>

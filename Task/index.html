@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Quiz Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Dynamic Quiz Builder</h1>
+
+    <!-- Quiz Builder -->
+    <div class="builder">
+        <input type="text" id="question" placeholder="Enter Question">
+
+        <input type="text" class="option" placeholder="Option 1">
+        <input type="text" class="option" placeholder="Option 2">
+        <input type="text" class="option" placeholder="Option 3">
+        <input type="text" class="option" placeholder="Option 4">
+
+        <select id="correct">
+            <option value="">Select Correct Answer</option>
+            <option value="0">Option 1</option>
+            <option value="1">Option 2</option>
+            <option value="2">Option 3</option>
+            <option value="3">Option 4</option>
+        </select>
+
+        <button onclick="addQuestion()">Add Question</button>
+        <button onclick="generateQuiz()">Generate Quiz</button>
+    </div>
+
+    <hr>
+
+    <!-- Quiz Area -->
+    <form id="quizForm"></form>
+
+    <button onclick="submitQuiz()">Submit Quiz</button>
+
+    <h2 id="score"></h2>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

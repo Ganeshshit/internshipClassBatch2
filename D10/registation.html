@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <form action="">
+            <label for="name">Enter Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter Your name">
+            <label for="rollNo">Roll Number</label>
+            <input type="text" name="rollno" id="rollno" placeholder="Enter Rol No">
+            <label for="emailid">Enter Your Email Id</label>
+            <input type="email" name="email" id="email" placeholder="user@email.com">
+            <label for="password">Enter Pasword</label>
+            <input type="password" name="password" id="password" placeholder="enter your password">
+            <button onclick="registation()">Submi</button>
+        </form>
+    </div>
+    <script>
+        let dBuser = [
+            { name: "Ganesh Shit", rolleNo: "202110463", email: "shitganesh4@gmail.com", passWord: "Ganesh@123" },
+            { name: "Ganesh Shit", rolleNo: "202110463", email: "manvikha@gmail.com", passWord: "Manvi@123" },
+            { name: "Ganesh Shit", rolleNo: "202110463", email: "benka@gmail.com", passWord: "Benka@123" }
+        ]
+
+        function registation() {
+            console.log("Befor User register Db set ")
+            console.log(JSON.stringify(dBuser))
+
+            let name = document.getElementById("name")
+            let rolleNo = document.getElementById("rollno")
+            let email = document.getElementById("email")
+            let password = document.getElementById("password")
+            let user = {
+                name: name.value,
+                rolleNo: rolleNo.value,
+                email: email.value,
+                password: password.value
+            }
+            let findUser = dBuser.find((item) => {
+                return item.email == user.email
+            })
+            if (findUser) {
+                alert('User already Exit')
+                console.log("User Already Exit")
+                return
+            }
+            dBuser.push(user)
+            console.log("Data set After user Registation")
+            console.log(JSON.stringify(dBuser))
+            alert("User Registation sucess fully")
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+Student Greeting Page
+
+Topics: HTML, CSS, Variables, String, Function
+
+Task:
+
+Create a webpage with an input field for Name
+
+Button: Greet
+
+When clicked → show message:
+"Hello Ganesh, Welcome!"
+
+Concepts to Use
+
+let / const
+
+string
+
+function
+
+DOM manipulatio
+
+
+
+2.Live Clock
+
+Topics: Date, setInterval
+
+Task:
+
+Display current time on webpage
+
+Update every 1 second
+
+3.Countdown
+
+
+Level 3 – Advanced Mixed Practice
+7. User Profile Card
+
+Topics: HTML, CSS, Object, Arrow Function
+
+Task
+
+Create a card UI
+
+Store user data in object
+
+Display name, age, email dynamically
+
+
+Age Calculator
+
+Topics: Date, Function, Variables
+
+Task
+
+Input Birth Year
+
+Calculate Age using Date()

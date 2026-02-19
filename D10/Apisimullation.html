@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fake API Simulation</title>
+</head>
+
+<body>
+
+    <h2>User List</h2>
+    <button onclick="loadUsers()">Load Users</button>
+    <ul id="users"></ul>
+
+    <script>
+        // Fake API Function returning Promise
+        function fakeApi() {
+            return new Promise(function (resolve) {
+                setTimeout(function () {
+                    const data = [
+                        { id: 1, name: "Ganesh" },
+                        { id: 2, name: "Rahul" },
+                        { id: 3, name: "Priya" }
+                    ];
+
+                    resolve(data); // send data after 2 sec
+                }, 2000);
+            });
+        }
+
+        // Async Function
+        async function loadUsers() {
+            document.getElementById("users").innerHTML = "Loading...";
+
+            const users = await fakeApi(); // wait 2 sec
+
+            // Convert names to uppercase using map
+            const upperUsers = users.map(function (user) {
+                return {
+                    id: user.id,
+                    name: user.name.toUpperCase()
+                };
+            });
+
+            // Display
+            const ul = document.getElementById("users");
+            ul.innerHTML = "";
+
+            upperUsers.map(function (user) {
+                const li = document.createElement("li");
+                li.textContent = user.name;
+                ul.appendChild(li);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

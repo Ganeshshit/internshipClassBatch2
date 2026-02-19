@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dynamic Form Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h2>Form Builder</h2>
+
+    <div class="builder">
+        <input type="text" id="labelName" placeholder="Enter Label (Name, Roll No)">
+
+        <select id="inputType">
+            <option value="text">Text</option>
+            <option value="number">Number</option>
+            <option value="password">Password</option>
+            <option value="email">Email</option>
+        </select>
+
+        <button onclick="addField()">Add Field</button>
+    </div>
+
+    <hr>
+    <h3>Generated Form</h3>
+    <div>
+
+        <form id="dynamicForm"></form>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

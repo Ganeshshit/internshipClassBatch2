@@ -1,0 +1,40 @@
+Filter Users by Age
+
+Given an array of user objects, return users whose age is greater than 25.
+
+[
+ {name: "A", age: 22},
+ {name: "B", age: 30},
+ {name: "C", age: 27}
+]
+
+/**
+ * Merges two objects:
+ * If a key exists in both, their numerical values are added.
+ * Otherwise, the key and its value are kept as is.
+ * Assumes values for shared keys are numerical.
+ *
+ * @param {object} obj1 The primary object to merge into.
+ * @param {object} obj2 The object to merge from.
+const a = { apple: 2, banana: 3 };
+const b = { banana: 4, orange: 1 };
+
+console.log(mergeObjects(a, b));
+// { apple: 2, banana: 7, orange: 1 }
+7.Group People by City
+
+Input array of objects → Output grouped object.
+
+[
+ {name:"A", city:"Delhi"},
+ {name:"B", city:"Mumbai"},
+ {name:"C", city:"Delhi"}
+]
+
+
+Output:
+
+{
+ Delhi: ["A","C"],
+ Mumbai: ["B"]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "ganesh",
+  "version": "1.0.1",
+  "description": "gnesh shit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ganesh",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^25.3.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

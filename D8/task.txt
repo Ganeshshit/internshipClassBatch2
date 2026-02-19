@@ -1,0 +1,80 @@
+Add 5 Marks to Each Student
+Print Even Numbers Only
+Display User Details
+Increase Salary by 10%
+const employees = [
+  { name: "Ram", salary: 20000 },
+  { name: "Shyam", salary: 30000 }
+];
+
+Count Passed Students
+Count how many students passed (marks ≥ 40).
+const students = [
+  { name: "A", mark: 35 },
+  { name: "B", mark: 50 },
+  { name: "C", mark: 70 }
+];
+
+Problem 4 – Add New Property to Each Object
+
+Problem:
+Add status: "active" to every user.
+const users = [
+  { name: "Ganesh" },
+  { name: "Raj" }
+];
+Problem 5 – Print Only Adults
+
+Problem:
+Print users whose age is 18 or more.
+const people = [
+  { name: "Tom", age: 15 },
+  { name: "Jerry", age: 22 },
+  { name: "Anna", age: 19 }
+];
+Problem 6 – Total Marks of All Students
+
+Problem:
+Find total marks.
+const data = [
+  { name: "A", mark: 10 },
+  { name: "B", mark: 20 },
+  { name: "C", mark: 30 }
+];
+Problem 1 – Print User Names with Delay (forEach + setTimeout)
+
+Problem:
+const users = [
+  { name: "Ganesh" },
+  { name: "Raj" },
+  { name: "Amit" }
+];
+Countdown Marks Display (Function + Timeout + Object)
+
+Problem:
+Print each student mark with 1 sec delay.
+const students = [
+  { name: "A", mark: 50 },
+  { name: "B", mark: 70 },
+  { name: "C", mark: 90 }
+];
+
+Auto Stop Interval After 5 Runs
+Problem:
+Increase marks every 1 second but stop after 5 times.
+const data = [
+  { name: "X", mark: 10 },
+  { name: "Y", mark: 20 }
+];
+let count = 0;
+
+const intervalId = setInterval(() => {
+  data.forEach(d => d.mark += 5);
+  console.log(data);
+
+  count++;
+  if (count === 5) {
+    clearInterval(intervalId);
+    console.log("Stopped!");
+  }
+}, 1000);

@@ -1,0 +1,20 @@
+body {
+  font-family: Arial;
+  padding: 20px;
+  background: #f2f2f2;
+}
+
+.builder {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+input, select, button {
+  padding: 8px;
+  margin: 5px;
+}
+
+form div {
+  margin-bottom: 10px;
+}

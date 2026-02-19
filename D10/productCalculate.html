@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product List</title>
+</head>
+
+<body>
+
+    <h2>Products</h2>
+    <ul id="productList"></ul>
+
+    <h3 id="total"></h3>
+
+    <script> // Array of Objects
+        const products = [
+            { name: "Pen", price: 10 },
+            { name: "Book", price: 50 }
+        ];
+
+        // Function to show product names
+        function showProducts() {
+            const ul = document.getElementById("productList");
+
+            products.map(function (item) {
+                const li = document.createElement("li");
+                li.textContent = item.name + " - ₹" + item.price;
+                ul.appendChild(li);
+            });
+        }
+
+        // Function to calculate total price
+        function calculateTotal() {
+            let total = 0;
+
+            products.map(function (item) {
+                total = total + item.price;
+            });
+
+            document.getElementById("total").textContent =
+                "Total Price: ₹" + total;
+        }
+
+        // Call functions
+        showProducts();
+        calculateTotal();
+</script>
+</body>
+
+</html>

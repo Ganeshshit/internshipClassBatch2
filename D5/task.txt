@@ -1,0 +1,12 @@
+1. Delayed Greeting
+Write a function delayedGreet(name, callback) that:
+Waits 2 seconds using setTimeout
+Prints "Hello <name>"
+Then executes the callback
+2. Simulated API Call
+
+Create a function fetchUser(callback):
+
+After 1.5 seconds return user object {id:1, name:"John"}
+
+Pass the data to callback.

@@ -1,0 +1,125 @@
+Task 1 – Delayed Greeting
+
+Create a function greetUser(name) that:
+
+Waits 2 seconds
+
+Then prints: Hello <name>
+
+If name is empty → print Invalid Name immediately (without timeout)
+
+Concepts: condition + setTimeout
+Task 2 – Countdown Timer
+
+Write a program that prints:
+
+5
+4
+3
+2
+1
+Go!
+
+
+Rules:
+
+Each number should appear after 1 second
+
+Use loop + setTimeout
+
+Do NOT use setInterval
+
+
+Task 3 – Delayed Array Processing
+
+Given:
+
+const numbers = [2,4,6,8];
+
+
+Task:
+
+After 3 seconds, print the sum of array
+
+If array is empty → print "No Data"
+
+Concepts: array + reduce + timeout
+
+
+
+Task 4 – Fake Login System
+
+Create a function login(username, password):
+
+Behavior:
+
+Immediately print "Checking credentials..."
+
+After 2 seconds:
+
+If username = "admin" AND password = "1234" → "Login Success"
+
+Else → "Login Failed"
+
+Concepts: condition + timeout + logical operators
+
+
+4. Filter Array + Async
+
+Array: [10, 25, 30, 45, 60]
+
+Tasks:
+
+Create a function that filters numbers greater than 30
+
+Use setTimeout to return result after 2 seconds
+
+Print "No numbers found" if empty.
+
+. Student Pass/Fail
+
+Array of marks [40, 55, 70, 20]
+
+Write a function that checks each mark
+
+If ≥ 35 → "Pass"
+
+Else → "Fail"
+
+Display result one by one every second using setTimeout.
+7. Async Fetch Simulation
+
+Create a fake async function getUsers():
+
+Returns array of users after 2 seconds.
+
+Loop through users.
+
+If age > 18 → "Adult"
+
+Else → "Minor"
+
+8. Shopping Cart Logic
+
+Array of prices [100, 250, 75, 300]
+
+Tasks:
+
+Create async function calculateTotal
+
+Use setTimeout
+
+If total > 500 → "Discount Applied"
+
+Else → "No Discount"
+9. Sequential Delays
+
+Array: ["A","B","C","D"]
+
+Tasks:
+
+Print each letter with 1-second gap.
+
+Use function + setTimeout.
+
+If letter is "C" → print "Special Letter".

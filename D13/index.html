@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .container div {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 200px;
+        }
+
+        .container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .userDiv {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* box-shadow: var(20); */
+            background-color: black;
+            color: white;
+            border: 30px solid white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello World</h1>
+    <div class="container" id="container"></div>
+    <script>
+        const container = document.getElementById("container")
+
+        // const url = "https://api.openligadb.de/getmatchdata/bl1/2024"
+        const url = 'http://localhost:8000/api'
+
+        // fetch(url)
+        //     .then(response => response.json()
+        //         // .then(data => console.log(data)))
+        //         .then(data => {
+        //             const users = data.results
+        //             users.forEach(user => {
+        //                 const userDiv = document.createElement("div")
+        //                 userDiv.className="userDiv"
+        //                 userDiv.innerHTML = `
+        //                     <p>Name: ${user.name.first} ${user.name.last}</p>
+        //                     <p>Email: ${user.email}</p>
+        //                     <img src="${user.picture.thumbnail}" alt="User Picture">
+        //                 `
+        //                 container.appendChild(userDiv)
+        //             })  
+        //         }))
+        fetch(url).then(response => {
+            response.json().then(data => {
+
+                const userDiv = document.createElement("div")
+                userDiv.innerHTML = `<h1>${data.message}</h1>`
+                //console.log(data)
+                container.appendChild(userDiv)
+            }
+            )
+        })
+
+    </script>
+</body>
+
+</html>

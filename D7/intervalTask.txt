@@ -1,0 +1,84 @@
+Easy Level
+1. Print Message Repeatedly
+
+Write a program that prints "Learning JavaScript" every 2 seconds.
+
+2. Simple Counter
+
+Use setInterval to print numbers from 1 to 10 every 1 second, then stop automatically.
+
+3. Digital Clock (Console)
+
+Display the current time every second in the console using new Date().
+
+Medium Level
+4. Stop Interval After Some Time
+
+Create an interval that prints "Running..." every second and stops after 5 seconds using clearInterval.
+
+5. Countdown Timer
+
+Create a countdown from 10 to 0 every second.
+When it reaches 0, print "Time’s Up!" and stop.
+
+6. Change Background Color
+
+In a webpage:
+
+Change the background color every 2 seconds.
+
+Stop changing after 10 seconds.
+
+7. Blinking Text
+
+Make a text element appear and disappear every 500ms.
+
+Hard Level
+8. Progress Bar Simulation
+
+Create a progress bar that:
+
+Increases by 10% every second
+
+Stops at 100%
+
+Displays “Completed”.
+
+9. Multiple Intervals Control
+
+Create two intervals:
+
+One prints "A" every second.
+
+Another prints "B" every 2 seconds.
+Stop both after 8 seconds.
+
+10. Auto-Save Feature Simulation
+
+Simulate an auto-save feature:
+
+Print "Saved" every 3 seconds.
+
+If user presses a button (or triggers a function), stop the interval.
+
+11. Typing Effect
+
+Display a string like "Hello World" one letter at a time every 300ms using setInterval.
+
+12. API Polling Simulation
+
+Create an interval that:
+
+Calls a fake function fetchData() every 5 seconds
+
+Stops after 3 calls
+
+Challenge (Advanced Thinking)
+13. Replace setInterval with setTimeout
+
+Re-implement Question 5 (Countdown Timer) without using setInterval, only setTimeout.
+
+14. Memory Leak Scenario
+
+Create an interval inside a button click handler.
+Then fix the issue so multiple clicks don’t create multiple intervals.

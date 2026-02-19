@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <form action="">
+            <!-- <label for="name">Name</label>
+            <input type="text" placeholder="name"> -->
+            <label for="email">Email</label>
+            <input type="email" placeholder="email" id="email">
+            <label for="password">Password</label>
+            <input type="password" placeholder="password" id="password">
+            <button onclick=loging()>Submit</button>
+
+
+            <p>If you dont have any account <a href="/registation.html">Click here</a></p>
+        </form>
+    </div>
+    <script>
+        let dBuser = [
+            { email: "shitganesh4@gmail.com", passWord: "Ganesh@123" },
+            { email: "manvikha@gmail.com", passWord: "Manvi@123" },
+            { email: "benka@gmail.com", passWord: "Benka@123" }
+        ]
+        function loging() {
+            let email = document.getElementById('email')
+
+            let passWord = document.getElementById('password')
+            let user = {
+                email: email.value,
+                passWord: passWord.value
+            }
+            let findUser = dBuser.find((item) => {
+                return item.email === user.email
+            })
+            console.log("Find User" + findUser.email + findUser.passWord)
+            console.log(user)
+            if (findUser && findUser.passWord === user.passWord) {
+                alert("Login Successfull")
+            } else {
+                alert("Invalid Credentials")
+            }
+            // if (user.email === dBuser[0].email && user.passWord === dBuser[0].passWord) {
+            //     alert("Login Successfull")
+            // } else {
+            //     alert("Invalid Credentials")
+            // }
+        }
+
+    </script>
+</body>
+
+</html>
