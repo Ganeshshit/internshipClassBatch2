@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container">
+        <h2>greet</h2>
+        <input type="text" id="username" placeholder="Enter your name">
+        <br>
+        <button onclick="greetuser()">Greet</button>
+    </div>
+    <script>
+        function greetuser(){
+            let name=document.getElementById("username").value;
+            if(name==""){
+                alert('Please Enter your name')
+            }else{
+                let text=document.getElementById("message")
+                text.className='text'
+                text.innerHtml=`Hello ${name}Wellcome`;
+            }
+        }
+    </script>
+</body>
+</html>
