@@ -1,0 +1,1 @@
+1772175082524 Get request from the browser Method :GET ,Path :/getUserData
