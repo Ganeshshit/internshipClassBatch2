@@ -1,0 +1,25 @@
+const express=require('express')
+const userRoute=require('./router/user.route')
+const orderRoute=require('./router/order.route')
+const productRoute=require('./router/product.route')
+const app=express()
+const {allusers,userid,createUser,allProducts, productsPrice, allOrders, createOrder,createOrderforId,Userorders}=require('./users')
+
+app.use(express.json())
+const PORT=8000
+app.listen(PORT,(req,res)=>{
+    console.log(`server running in ${PORT}`)
+})
+
+app.use('/users',userRoute)
+app.use('/orders',orderRoute)
+app.use('/products',productRoute)
+//app.get('/users',allusers)
+//app.get('/users/:id',userid)
+//app.post('/users/create',createUser)
+// app.get('/products',allProducts)
+// app.get('/products/filter',productsPrice)
+//app.get('/orders',allOrders)
+// app.get('/orders/:id',Userorders)
+// app.post('/orders/create',createOrder)
+// app.post('/orders/create/:id',createOrderforId)
