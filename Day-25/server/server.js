@@ -1,0 +1,15 @@
+const express=require('express')
+const dotenv=require('dotenv')
+const{connectMongo}=require('./db')
+const userRouter=require('./routes/userRoute')
+const app=express()
+const{logfile}=require('./middleware/logger')
+const PORT=8000
+app.listen(PORT,(req,res)=>{
+    console.log(`server running in ${PORT}`)
+})
+dotenv.config()
+connectMongo()
+app.use(express.json())
+app.use(logfile)
+app.use('/users',userRouter)
