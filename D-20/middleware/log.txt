@@ -1,1 +1,6 @@
 1772176396671 Get request from the browser Method :GET ,Path :/getUserData1772176412482 Get request from the browser Method :GET ,Path :/getUserData1772176414663 Get request from the browser Method :GET ,Path :/getUserData
+1772598834585 Get request from the browser Method :GET ,Path :/getUserData 
+
+1772598856147 Get request from the browser Method :GET ,Path :/getUserData 
+1772598861442 Get request from the browser Method :GET ,Path :/getUserData 
+1772598986487 Get request from the browser Method :GET ,Path :/home 

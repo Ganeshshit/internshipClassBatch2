@@ -2,46 +2,1657 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Be My Valentine?</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;600;800&display=swap"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Sacramento&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap"
         rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1c0d0d;
+            --rose: #c94060;
+            --rose-mid: #e8607a;
+            --gold: #c8923a;
+            --gold-lt: #f0c878;
+            --parch: #fdf5e8;
+            --parch2: #f5ead4;
+            --cream: #fffdf8;
+            --deep: #080205;
+            --env-bg: #2a0810;
+        }
 
-    <link rel="stylesheet" href="style.css" />
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+        body {
+            background: var(--deep);
+            overflow: hidden;
+            font-family: 'Lora', serif;
+            cursor: none;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* CURSOR */
+        #cur {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            width: 22px;
+            height: 22px;
+            transition: transform .12s ease;
+        }
+
+        #cur.big {
+            transform: translate(-50%, -50%) scale(1.8);
+        }
+
+        #tc {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 99998;
+        }
+
+        /* BG */
+        #bgc {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .vig {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background: radial-gradient(ellipse at 50% 50%, transparent 25%, rgba(6, 1, 4, .93) 100%);
+            pointer-events: none;
+        }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            opacity: .03;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 180px;
+        }
+
+        /* HERO */
+        #hero {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            transition: opacity 1.4s ease, transform 1.4s ease;
+        }
+
+        #hero.out {
+            opacity: 0;
+            transform: scale(1.07) translateY(-16px);
+            pointer-events: none;
+        }
+
+        .h-label {
+            font-family: 'Crimson Pro', serif;
+            font-style: italic;
+            font-size: clamp(.78rem, 1.8vw, .92rem);
+            color: var(--gold);
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: riseIn 1s ease .2s forwards;
+        }
+
+        .h-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: clamp(3.5rem, 11vw, 8.5rem);
+            line-height: 1;
+            color: var(--cream);
+            opacity: 0;
+            animation: riseIn 1.1s ease .5s forwards;
+            position: relative;
+            margin: .15em 0 .06em;
+        }
+
+        .h-title em {
+            color: var(--rose-mid);
+            font-style: italic;
+        }
+
+        .h-glow {
+            position: absolute;
+            inset: -50px;
+            background: radial-gradient(ellipse, rgba(201, 64, 96, .2) 0%, transparent 70%);
+            filter: blur(28px);
+            pointer-events: none;
+            animation: glowPulse 4s ease infinite;
+        }
+
+        .h-sub {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: clamp(.9rem, 2.4vw, 1.2rem);
+            color: rgba(253, 245, 232, .52);
+            max-width: 380px;
+            line-height: 1.85;
+            opacity: 0;
+            animation: riseIn 1s ease .9s forwards;
+            margin-bottom: 2.8rem;
+        }
+
+        .cta {
+            position: relative;
+            cursor: none;
+            padding: 1.05rem 3rem;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--cream);
+            background: transparent;
+            border: none;
+            opacity: 0;
+            animation: riseIn 1s ease 1.2s forwards;
+            overflow: hidden;
+        }
+
+        .cta-border {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(200, 146, 58, .4);
+            transition: border-color .4s;
+        }
+
+        .cta:hover .cta-border {
+            border-color: var(--gold-lt);
+        }
+
+        .cta-fill {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201, 64, 96, .12), rgba(200, 146, 58, .08));
+            opacity: 0;
+            transition: opacity .4s;
+        }
+
+        .cta:hover .cta-fill {
+            opacity: 1;
+        }
+
+        .cta-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .07), transparent);
+            transition: left .8s ease;
+        }
+
+        .cta:hover .cta-shine {
+            left: 200%;
+        }
+
+        /* ENVELOPE STAGE */
+        #stage {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .8s ease;
+            padding: 1rem;
+        }
+
+        #stage.on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* THE ENVELOPE WRAPPER */
+        .env-scene {
+            perspective: 1400px;
+            width: min(520px, 92vw);
+        }
+
+        /* Main envelope container */
+        .env-wrap {
+            position: relative;
+            width: 100%;
+            padding-bottom: 68%;
+            transform-style: preserve-3d;
+            cursor: none;
+            filter: drop-shadow(0 50px 80px rgba(0, 0, 0, .8)) drop-shadow(0 20px 40px rgba(201, 64, 96, .12));
+            transition: filter .3s;
+        }
+
+        .env-wrap:hover {
+            filter: drop-shadow(0 60px 100px rgba(0, 0, 0, .85)) drop-shadow(0 25px 50px rgba(201, 64, 96, .2));
+        }
+
+        /* ── ENVELOPE BODY (SVG illustrated) ── */
+        .env-body-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ── FLAP LAYERS ── */
+        .flap-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 52%;
+            transform-origin: top center;
+            transform-style: preserve-3d;
+            z-index: 20;
+            transition: transform 1.1s cubic-bezier(.4, 0, .15, 1);
+        }
+
+        .flap-container.open {
+            transform: rotateX(-182deg);
+        }
+
+        .flap-front,
+        .flap-back {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+        }
+
+        .flap-front {
+            backface-visibility: hidden;
+        }
+
+        .flap-back {
+            backface-visibility: hidden;
+            transform: rotateX(180deg);
+        }
+
+        /* ── STAMP ── */
+        .stamp {
+            position: absolute;
+            top: 8%;
+            right: 6%;
+            width: 14%;
+            z-index: 15;
+            transform: rotate(2deg);
+            transition: transform .3s ease;
+        }
+
+        .env-wrap:hover .stamp {
+            transform: rotate(2deg) scale(1.05);
+        }
+
+        /* ── POSTMARK ── */
+        .postmark {
+            position: absolute;
+            top: 10%;
+            right: 18%;
+            width: 18%;
+            z-index: 16;
+            opacity: .7;
+        }
+
+        /* ── RIBBON ── */
+        .ribbon-h,
+        .ribbon-v {
+            position: absolute;
+            background: linear-gradient(to right, rgba(200, 146, 58, .0), rgba(200, 146, 58, .55), rgba(200, 146, 58, .0));
+            z-index: 12;
+            transition: opacity .6s ease;
+        }
+
+        .ribbon-h {
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            transform: translateY(-50%);
+        }
+
+        .ribbon-v {
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, rgba(200, 146, 58, .0), rgba(200, 146, 58, .55), rgba(200, 146, 58, .0));
+        }
+
+        .ribbon-h.cut,
+        .ribbon-v.cut {
+            opacity: 0;
+        }
+
+        /* ── WAX SEAL ── */
+        .wax-wrap {
+            position: absolute;
+            bottom: calc(50% - 38px);
+            left: calc(50% - 38px);
+            width: 76px;
+            height: 76px;
+            z-index: 25;
+            transition: all .8s cubic-bezier(.34, 1.4, .64, 1);
+        }
+
+        .wax-wrap.shattered {
+            transform: scale(.4) rotate(25deg) translateY(120px);
+            opacity: 0;
+        }
+
+        /* Crack SVG overlay */
+        .wax-crack {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity .2s ease .3s;
+        }
+
+        .wax-crack.show {
+            opacity: 1;
+        }
+
+        /* Letter peek */
+        .letter-peek {
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            bottom: 5%;
+            height: 76%;
+            z-index: 5;
+            overflow: hidden;
+            transition: transform 1.3s cubic-bezier(.34, 1.1, .64, 1) .5s;
+        }
+
+        .env-wrap.open .letter-peek {
+            transform: translateY(-120%);
+        }
+
+        .lp-inner {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, #fdf5e8 0%, #f5ead4 100%);
+            border-radius: 2px 2px 0 0;
+            box-shadow: 0 -6px 30px rgba(0, 0, 0, .3), 0 60px 90px rgba(0, 0, 0, .55);
+        }
+
+        /* mini letter preview lines */
+        .lp-inner::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 12px;
+            right: 12px;
+            bottom: 8px;
+            background: repeating-linear-gradient(to bottom, transparent 0, transparent 11px, rgba(180, 140, 100, .18) 11px, rgba(180, 140, 100, .18) 12px);
+        }
+
+        .lp-inner::after {
+            content: 'My Dearest,';
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            font-family: 'Sacramento', cursive;
+            font-size: .9rem;
+            color: rgba(180, 80, 100, .55);
+        }
+
+        .tap-hint {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Crimson Pro', serif;
+            font-style: italic;
+            color: rgba(253, 245, 232, .32);
+            font-size: .8rem;
+            letter-spacing: .12em;
+            animation: breathe 3s ease infinite;
+            pointer-events: none;
+            z-index: 20;
+            transition: opacity .5s;
+        }
+
+        .tap-hint.gone {
+            opacity: 0;
+        }
+
+        /* LETTER MODAL */
+        #letter-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .7s ease;
+            overflow-y: auto;
+            padding: 2rem 1rem 5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #letter-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #letter-modal::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 30%, rgba(30, 4, 12, .94) 0%, rgba(6, 1, 4, .97) 100%);
+            z-index: -1;
+        }
+
+        .letter-paper {
+            width: min(680px, 96vw);
+            background: var(--parch);
+            border-radius: 4px;
+            box-shadow: 0 0 0 1px rgba(180, 130, 60, .2), 0 70px 130px rgba(0, 0, 0, .72);
+            overflow: hidden;
+            transform: translateY(28px);
+            transition: transform .7s cubic-bezier(.34, 1.2, .64, 1);
+            position: relative;
+        }
+
+        #letter-modal.show .letter-paper {
+            transform: translateY(0);
+        }
+
+        .paper-lines {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(180, 140, 100, .13) 31px, rgba(180, 140, 100, .13) 32px);
+            background-position: 0 85px;
+        }
+
+        .paper-margin {
+            position: absolute;
+            left: 74px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(201, 64, 96, .12);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .letter-inner {
+            position: relative;
+            z-index: 2;
+            padding: 3.5rem 3.2rem 4rem 5.2rem;
+        }
+
+        .l-dateline {
+            font-family: 'Crimson Pro', serif;
+            font-style: italic;
+            font-size: .82rem;
+            color: rgba(100, 60, 40, .6);
+            letter-spacing: .05em;
+            text-align: right;
+            margin-bottom: 2.5rem;
+        }
+
+        .l-greeting {
+            font-family: 'Sacramento', cursive;
+            font-size: clamp(2.2rem, 6vw, 3.4rem);
+            color: var(--rose);
+            margin-bottom: 1.6rem;
+            line-height: 1.1;
+            min-height: 3.5rem;
+        }
+
+        .l-p {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: clamp(.88rem, 2.1vw, 1.02rem);
+            color: var(--ink);
+            line-height: 2;
+            margin-bottom: 1.4rem;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .75s ease, transform .75s ease;
+        }
+
+        .l-p.vis {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .l-p span.hl {
+            background: linear-gradient(to bottom, transparent 58%, rgba(201, 64, 96, .2) 58%);
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        .l-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.8rem 0;
+            opacity: 0;
+            transition: opacity .7s ease;
+        }
+
+        .l-divider.vis {
+            opacity: 1;
+        }
+
+        .l-div-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(201, 64, 96, .3), transparent);
+        }
+
+        .l-div-icon {
+            color: var(--rose);
+            font-size: .9rem;
+            flex-shrink: 0;
+            display: inline-block;
+            animation: spinSlow 10s linear infinite;
+        }
+
+        .memory-row {
+            display: flex;
+            gap: 1.3rem;
+            flex-wrap: wrap;
+            margin: 1.8rem 0;
+            justify-content: center;
+        }
+
+        .mem-card {
+            background: white;
+            padding: .75rem .75rem 1.9rem;
+            box-shadow: 2px 4px 20px rgba(0, 0, 0, .18);
+            transform: rotate(var(--r)) scale(.88);
+            transition: opacity .6s ease, transform .55s cubic-bezier(.34, 1.35, .64, 1), box-shadow .3s ease;
+            cursor: none;
+            width: 145px;
+            opacity: 0;
+        }
+
+        .mem-card.vis {
+            opacity: 1;
+            transform: rotate(var(--r)) scale(1);
+        }
+
+        .mem-card:hover {
+            transform: rotate(0deg) scale(1.07) !important;
+            box-shadow: 3px 10px 32px rgba(0, 0, 0, .28);
+            z-index: 5;
+        }
+
+        .mem-img {
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.6rem;
+            line-height: 1;
+            background: var(--parch2);
+        }
+
+        .mem-caption {
+            font-family: 'Crimson Pro', serif;
+            font-style: italic;
+            font-size: .7rem;
+            color: rgba(60, 30, 20, .55);
+            text-align: center;
+            margin-top: .55rem;
+        }
+
+        .l-quote {
+            border-left: 3px solid var(--rose);
+            padding: .85rem 1.3rem .85rem 1.6rem;
+            margin: 1.6rem 0;
+            background: rgba(201, 64, 96, .04);
+            border-radius: 0 4px 4px 0;
+            opacity: 0;
+            transform: translateX(-12px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .l-quote.vis {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .l-quote-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.4vw, 1.18rem);
+            color: var(--rose);
+            line-height: 1.7;
+        }
+
+        .l-quote-attr {
+            font-family: 'Crimson Pro', serif;
+            font-size: .76rem;
+            color: rgba(100, 60, 40, .5);
+            margin-top: .45rem;
+        }
+
+        .love-list {
+            background: rgba(201, 64, 96, .04);
+            border: 1px solid rgba(201, 64, 96, .13);
+            border-radius: 6px;
+            padding: 1.3rem 1.6rem;
+            margin: 1.5rem 0;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .love-list.vis {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .love-list-title {
+            font-family: 'Sacramento', cursive;
+            font-size: 1.55rem;
+            color: var(--rose);
+            margin-bottom: .85rem;
+        }
+
+        .love-item {
+            display: flex;
+            align-items: baseline;
+            gap: .65rem;
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: .88rem;
+            color: var(--ink);
+            line-height: 1.8;
+        }
+
+        .love-item::before {
+            content: '❤';
+            font-size: .62rem;
+            color: var(--rose);
+            flex-shrink: 0;
+        }
+
+        .l-poem {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            margin: 1.5rem 0;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .l-poem.vis {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .poem-line {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(.93rem, 2.2vw, 1.08rem);
+            color: var(--ink);
+            line-height: 2.15;
+        }
+
+        .poem-line.bold {
+            font-weight: 700;
+            color: var(--rose);
+        }
+
+        .bear-section {
+            text-align: center;
+            padding: 1.2rem 0;
+            opacity: 0;
+            transition: opacity .7s ease;
+        }
+
+        .bear-section.vis {
+            opacity: 1;
+        }
+
+        .bear-img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(201, 64, 96, .25);
+            box-shadow: 0 4px 22px rgba(201, 64, 96, .22);
+            animation: bearBob 3.2s ease-in-out infinite;
+        }
+
+        .bear-label {
+            font-family: 'Crimson Pro', serif;
+            font-style: italic;
+            font-size: .78rem;
+            color: rgba(100, 60, 40, .52);
+            margin-top: .55rem;
+        }
+
+        .l-sig {
+            margin-top: 2.2rem;
+            text-align: right;
+            opacity: 0;
+            transition: opacity .8s ease;
+        }
+
+        .l-sig.vis {
+            opacity: 1;
+        }
+
+        .sig-label {
+            font-family: 'Crimson Pro', serif;
+            font-style: italic;
+            font-size: .8rem;
+            color: rgba(100, 60, 40, .48);
+            margin-bottom: .2rem;
+        }
+
+        .sig-name {
+            font-family: 'Sacramento', cursive;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: var(--rose);
+        }
+
+        .sig-hearts {
+            margin-top: .45rem;
+            font-size: 1.1rem;
+            animation: heartBeat 1.6s ease infinite;
+        }
+
+        .typewriter::after {
+            content: '|';
+            animation: blink .75s step-end infinite;
+            color: var(--rose);
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        #closeBtn {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 200;
+            background: none;
+            border: 1px solid rgba(200, 146, 58, .3);
+            color: rgba(253, 245, 232, .48);
+            font-family: 'Crimson Pro', serif;
+            font-size: .7rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            padding: .55rem 1.1rem;
+            cursor: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: all .4s;
+        }
+
+        #closeBtn.on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #closeBtn:hover {
+            border-color: var(--gold-lt);
+            color: var(--cream);
+        }
+
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes glowPulse {
+
+            0%,
+            100% {
+                opacity: .7
+            }
+
+            50% {
+                opacity: 1.3
+            }
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                opacity: .32
+            }
+
+            50% {
+                opacity: .75
+            }
+        }
+
+        @keyframes spinSlow {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            15% {
+                transform: scale(1.28)
+            }
+
+            30% {
+                transform: scale(1)
+            }
+
+            45% {
+                transform: scale(1.14)
+            }
+        }
+
+        @keyframes bearBob {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-7px)
+            }
+        }
+
+        @keyframes burstOut {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(var(--rot));
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by))) scale(.15) rotate(var(--rot));
+                opacity: 0;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center
+            }
+
+            100% {
+                background-position: 200% center
+            }
+        }
+
+        @keyframes floatPetal {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: .8
+            }
+
+            100% {
+                transform: translateY(-30px) rotate(40deg);
+                opacity: 0
+            }
+        }
+
+        @keyframes sealPulse {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 8px rgba(201, 64, 96, .5))
+            }
+
+            50% {
+                filter: drop-shadow(0 0 18px rgba(201, 64, 96, .9)) drop-shadow(0 0 6px rgba(240, 200, 120, .6))
+            }
+        }
+
+        @keyframes ribbonShimmer {
+
+            0%,
+            100% {
+                opacity: .45
+            }
+
+            50% {
+                opacity: .75
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <canvas id="bgc"></canvas>
+    <div class="vig"></div>
+    <div class="grain"></div>
+    <div id="cur"><svg viewBox="0 0 24 24">
+            <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                fill="#c94060" filter="drop-shadow(0 0 5px rgba(201,64,96,.9))" />
+        </svg></div>
+    <canvas id="tc"></canvas>
 
-    <div id="tsparticles"></div>
+    <!-- HERO -->
+    <section id="hero">
+        <div class="h-label">A letter for your eyes only</div>
+        <h1 class="h-title">
+            <div class="h-glow"></div>For <em>You</em>
+        </h1>
+        <p class="h-sub">I wrote you something. Take a breath, and open it whenever you're ready.</p>
+        <button class="cta" id="openBtn">
+            <div class="cta-border"></div>
+            <div class="cta-fill"></div>
+            <div class="cta-shine"></div>Open the Letter
+        </button>
+    </section>
 
-    <div class="container">
-        <div class="card">
-            <h1>Hey &#x2764;&#xFE0F;</h1>
-            <p class="subtitle">I have something important to ask you...</p>
-            <h2>Will you be my Valentine?</h2>
+    <!-- ENVELOPE STAGE -->
+    <section id="stage">
+        <div class="env-scene" id="envScene">
+            <div class="env-wrap" id="envWrap">
 
-            <div class="button-row">
-                <button id="yesBtn" class="yes">Yes &#x2764;&#xFE0F;</button>
-                <button id="noBtn" class="no">No &#128584;</button>
+                <!-- ═══════════════════════════════════════
+           ILLUSTRATED ENVELOPE BODY (SVG)
+      ═══════════════════════════════════════ -->
+                <svg class="env-body-svg" viewBox="0 0 520 354" xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none">
+                    <defs>
+                        <!-- Main body gradient - deep burgundy velvet -->
+                        <linearGradient id="envGrad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#3d0e1c" />
+                            <stop offset="40%" stop-color="#2a0810" />
+                            <stop offset="100%" stop-color="#160407" />
+                        </linearGradient>
+                        <!-- Gold foil shimmer -->
+                        <linearGradient id="goldFoil" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#8B6914" stop-opacity=".0" />
+                            <stop offset="30%" stop-color="#D4A843" stop-opacity=".9" />
+                            <stop offset="50%" stop-color="#F8E070" stop-opacity="1" />
+                            <stop offset="70%" stop-color="#C8923A" stop-opacity=".9" />
+                            <stop offset="100%" stop-color="#8B6914" stop-opacity=".0" />
+                        </linearGradient>
+                        <!-- Inner diagonal folds -->
+                        <linearGradient id="foldLeft" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#5a1020" />
+                            <stop offset="100%" stop-color="#200508" />
+                        </linearGradient>
+                        <linearGradient id="foldRight" x1="1" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#5a1020" />
+                            <stop offset="100%" stop-color="#200508" />
+                        </linearGradient>
+                        <linearGradient id="foldBottom" x1="0" y1="1" x2="0" y2="0">
+                            <stop offset="0%" stop-color="#4a0e1a" />
+                            <stop offset="100%" stop-color="#260609" />
+                        </linearGradient>
+                        <!-- Rose glow filter -->
+                        <filter id="roseGlow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <!-- Gold glow filter -->
+                        <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="2.5" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <!-- Soft emboss -->
+                        <filter id="emboss">
+                            <feConvolveMatrix kernelMatrix="-1 -1 0 -1 0 1 0 1 1" order="3" result="e" />
+                            <feBlend in="SourceGraphic" in2="e" mode="overlay" result="b" />
+                            <feComposite in="b" in2="SourceGraphic" operator="in" />
+                        </filter>
+                        <pattern id="microDots" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                            <circle cx="4" cy="4" r=".6" fill="rgba(200,146,58,.12)" />
+                        </pattern>
+                        <clipPath id="envClip">
+                            <rect x="0" y="0" width="520" height="354" rx="4" />
+                        </clipPath>
+                    </defs>
+
+                    <g clip-path="url(#envClip)">
+                        <!-- Base body -->
+                        <rect x="0" y="0" width="520" height="354" rx="4" fill="url(#envGrad)" />
+                        <!-- Micro dot texture -->
+                        <rect x="0" y="0" width="520" height="354" fill="url(#microDots)" />
+
+                        <!-- ── FOLD TRIANGLES (back layer) ── -->
+                        <!-- Bottom fold -->
+                        <polygon points="0,354 520,354 260,177" fill="url(#foldBottom)" opacity=".85" />
+                        <!-- Left fold -->
+                        <polygon points="0,0 0,354 260,177" fill="url(#foldLeft)" opacity=".7" />
+                        <!-- Right fold -->
+                        <polygon points="520,0 520,354 260,177" fill="url(#foldRight)" opacity=".7" />
+
+                        <!-- Fold seam lines (golden) -->
+                        <line x1="0" y1="354" x2="260" y2="177" stroke="rgba(200,146,58,.2)" stroke-width="1" />
+                        <line x1="520" y1="354" x2="260" y2="177" stroke="rgba(200,146,58,.2)" stroke-width="1" />
+                        <line x1="0" y1="0" x2="260" y2="177" stroke="rgba(200,146,58,.14)" stroke-width=".8" />
+                        <line x1="520" y1="0" x2="260" y2="177" stroke="rgba(200,146,58,.14)" stroke-width=".8" />
+
+                        <!-- ── ORNATE BORDER ── -->
+                        <!-- Outer gold border -->
+                        <rect x="8" y="8" width="504" height="338" rx="3" fill="none" stroke="rgba(200,146,58,.35)"
+                            stroke-width="1.5" />
+                        <!-- Inner fine border -->
+                        <rect x="14" y="14" width="492" height="326" rx="2" fill="none" stroke="rgba(200,146,58,.18)"
+                            stroke-width=".8" />
+                        <!-- Corner ornaments -->
+                        <!-- Top-left corner -->
+                        <g opacity=".7" fill="none" stroke="rgba(200,146,58,.6)" stroke-width="1">
+                            <path d="M14,14 L14,30 M14,14 L30,14" />
+                            <circle cx="14" cy="14" r="3" fill="rgba(200,146,58,.4)" stroke="none" />
+                            <path d="M18,18 Q22,14 26,18 Q22,22 18,18Z" fill="rgba(200,146,58,.25)" stroke="none" />
+                        </g>
+                        <!-- Top-right corner -->
+                        <g opacity=".7" fill="none" stroke="rgba(200,146,58,.6)" stroke-width="1">
+                            <path d="M506,14 L506,30 M506,14 L490,14" />
+                            <circle cx="506" cy="14" r="3" fill="rgba(200,146,58,.4)" stroke="none" />
+                            <path d="M502,18 Q498,14 494,18 Q498,22 502,18Z" fill="rgba(200,146,58,.25)"
+                                stroke="none" />
+                        </g>
+                        <!-- Bottom-left corner -->
+                        <g opacity=".7" fill="none" stroke="rgba(200,146,58,.6)" stroke-width="1">
+                            <path d="M14,340 L14,324 M14,340 L30,340" />
+                            <circle cx="14" cy="340" r="3" fill="rgba(200,146,58,.4)" stroke="none" />
+                            <path d="M18,336 Q22,340 26,336 Q22,332 18,336Z" fill="rgba(200,146,58,.25)"
+                                stroke="none" />
+                        </g>
+                        <!-- Bottom-right corner -->
+                        <g opacity=".7" fill="none" stroke="rgba(200,146,58,.6)" stroke-width="1">
+                            <path d="M506,340 L506,324 M506,340 L490,340" />
+                            <circle cx="506" cy="340" r="3" fill="rgba(200,146,58,.4)" stroke="none" />
+                            <path d="M502,336 Q498,340 494,336 Q498,332 502,336Z" fill="rgba(200,146,58,.25)"
+                                stroke="none" />
+                        </g>
+
+                        <!-- ── LARGE FLORAL CORNER MOTIFS ── -->
+                        <!-- Bottom-left roses -->
+                        <g filter="url(#roseGlow)" opacity=".65">
+                            <!-- Main rose -->
+                            <circle cx="55" cy="305" r="22" fill="none" stroke="#c94060" stroke-width=".8" />
+                            <circle cx="55" cy="305" r="16" fill="rgba(180,40,70,.4)" />
+                            <circle cx="55" cy="305" r="11" fill="rgba(201,64,96,.55)" />
+                            <circle cx="55" cy="305" r="6" fill="rgba(232,96,122,.65)" />
+                            <!-- Petals -->
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.5)"
+                                transform="rotate(-10,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.45)"
+                                transform="rotate(25,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.4)"
+                                transform="rotate(60,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.45)"
+                                transform="rotate(95,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.5)"
+                                transform="rotate(130,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.45)"
+                                transform="rotate(165,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.4)"
+                                transform="rotate(200,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.45)"
+                                transform="rotate(235,55,305)" />
+                            <!-- Small buds -->
+                            <ellipse cx="28" cy="295" rx="4" ry="7" fill="rgba(201,64,96,.45)"
+                                transform="rotate(-30,28,295)" />
+                            <ellipse cx="40" cy="332" rx="4" ry="7" fill="rgba(201,64,96,.4)"
+                                transform="rotate(20,40,332)" />
+                            <!-- Leaves -->
+                            <path d="M40,290 Q25,282 22,268 Q35,272 40,290Z" fill="rgba(60,110,50,.45)" />
+                            <path d="M62,328 Q50,340 36,342 Q40,328 62,328Z" fill="rgba(60,110,50,.4)" />
+                            <path d="M30,318 Q18,310 16,296 Q28,302 30,318Z" fill="rgba(60,110,50,.35)" />
+                            <!-- Stem -->
+                            <path d="M55,327 Q45,338 38,348" stroke="rgba(60,110,50,.5)" stroke-width="1.5"
+                                fill="none" />
+                        </g>
+
+                        <!-- Bottom-right roses -->
+                        <g filter="url(#roseGlow)" opacity=".65" transform="scale(-1,1) translate(-520,0)">
+                            <circle cx="55" cy="305" r="22" fill="none" stroke="#c94060" stroke-width=".8" />
+                            <circle cx="55" cy="305" r="16" fill="rgba(180,40,70,.4)" />
+                            <circle cx="55" cy="305" r="11" fill="rgba(201,64,96,.55)" />
+                            <circle cx="55" cy="305" r="6" fill="rgba(232,96,122,.65)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.5)"
+                                transform="rotate(-10,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.45)"
+                                transform="rotate(25,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.4)"
+                                transform="rotate(60,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.45)"
+                                transform="rotate(95,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.5)"
+                                transform="rotate(130,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.45)"
+                                transform="rotate(165,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.4)"
+                                transform="rotate(200,55,305)" />
+                            <ellipse cx="55" cy="284" rx="6" ry="10" fill="rgba(201,64,96,.45)"
+                                transform="rotate(235,55,305)" />
+                            <ellipse cx="28" cy="295" rx="4" ry="7" fill="rgba(201,64,96,.45)"
+                                transform="rotate(-30,28,295)" />
+                            <ellipse cx="40" cy="332" rx="4" ry="7" fill="rgba(201,64,96,.4)"
+                                transform="rotate(20,40,332)" />
+                            <path d="M40,290 Q25,282 22,268 Q35,272 40,290Z" fill="rgba(60,110,50,.45)" />
+                            <path d="M62,328 Q50,340 36,342 Q40,328 62,328Z" fill="rgba(60,110,50,.4)" />
+                            <path d="M30,318 Q18,310 16,296 Q28,302 30,318Z" fill="rgba(60,110,50,.35)" />
+                            <path d="M55,327 Q45,338 38,348" stroke="rgba(60,110,50,.5)" stroke-width="1.5"
+                                fill="none" />
+                        </g>
+
+                        <!-- ── SMALL SCATTERED FLORALS (top corners) ── -->
+                        <g opacity=".45" fill="none">
+                            <!-- top-left tiny spray -->
+                            <circle cx="40" cy="50" r="7" stroke="#c94060" stroke-width=".8"
+                                fill="rgba(201,64,96,.2)" />
+                            <circle cx="40" cy="50" r="3" fill="rgba(232,96,122,.5)" stroke="none" />
+                            <path d="M40,43 Q38,38 40,34 Q42,38 40,43Z" fill="rgba(201,64,96,.4)" />
+                            <path d="M47,47 Q52,45 56,47 Q52,50 47,47Z" fill="rgba(201,64,96,.35)" />
+                            <path d="M33,47 Q28,45 24,47 Q28,50 33,47Z" fill="rgba(201,64,96,.35)" />
+                            <path d="M37,57 Q34,62 30,64 Q33,60 37,57Z" fill="rgba(60,110,50,.4)" />
+                            <!-- top-right tiny spray -->
+                            <circle cx="480" cy="50" r="7" stroke="#c94060" stroke-width=".8"
+                                fill="rgba(201,64,96,.2)" />
+                            <circle cx="480" cy="50" r="3" fill="rgba(232,96,122,.5)" stroke="none" />
+                            <path d="M480,43 Q478,38 480,34 Q482,38 480,43Z" fill="rgba(201,64,96,.4)" />
+                            <path d="M487,47 Q492,45 496,47 Q492,50 487,47Z" fill="rgba(201,64,96,.35)" />
+                            <path d="M473,47 Q468,45 464,47 Q468,50 473,47Z" fill="rgba(201,64,96,.35)" />
+                            <path d="M483,57 Q486,62 490,64 Q487,60 483,57Z" fill="rgba(60,110,50,.4)" />
+                        </g>
+
+                        <!-- ── CENTRAL ADDRESS AREA ── -->
+                        <!-- Subtle rectangle for address -->
+                        <rect x="160" y="170" width="200" height="90" rx="2" fill="rgba(0,0,0,.15)"
+                            stroke="rgba(200,146,58,.15)" stroke-width=".8" />
+                        <!-- "To:" script text -->
+                        <text x="172" y="193" font-family="Georgia,serif" font-style="italic" font-size="11"
+                            fill="rgba(200,146,58,.55)" letter-spacing="1">To,</text>
+                        <text x="172" y="215" font-family="Georgia,serif" font-style="italic" font-size="15"
+                            fill="rgba(253,245,232,.7)" letter-spacing=".5">My Dearest</text>
+                        <text x="172" y="235" font-family="Georgia,serif" font-style="italic" font-size="11"
+                            fill="rgba(200,146,58,.45)" letter-spacing=".5">Wherever your heart may be</text>
+                        <!-- Underline decoration -->
+                        <line x1="172" y1="240" x2="348" y2="240" stroke="rgba(200,146,58,.2)" stroke-width=".7" />
+
+                        <!-- ── GOLD FOIL SHIMMER BAND ── -->
+                        <rect x="0" y="170" width="520" height="3" fill="url(#goldFoil)" opacity=".4" />
+                        <rect x="0" y="181" width="520" height="1" fill="url(#goldFoil)" opacity=".2" />
+
+                        <!-- ── SCATTERED TINY HEARTS ── -->
+                        <g fill="rgba(201,64,96,.22)" font-size="10" font-family="serif">
+                            <text x="96" y="160">♥</text>
+                            <text x="415" y="165">♥</text>
+                            <text x="82" y="215">♥</text>
+                            <text x="425" y="210">♥</text>
+                            <text x="110" y="260" font-size="7">♥</text>
+                            <text x="400" y="255" font-size="7">♥</text>
+                        </g>
+
+                        <!-- ── BOTTOM RIBBON DECORATION ── -->
+                        <g opacity=".5">
+                            <line x1="14" y1="310" x2="100" y2="310" stroke="rgba(200,146,58,.5)" stroke-width="1.2" />
+                            <line x1="420" y1="310" x2="506" y2="310" stroke="rgba(200,146,58,.5)" stroke-width="1.2" />
+                            <text x="220" y="315" font-family="Georgia,serif" font-style="italic" font-size="9"
+                                fill="rgba(200,146,58,.55)" letter-spacing="3" text-anchor="middle">✦ with love ✦</text>
+                        </g>
+                    </g>
+                </svg>
+
+                <!-- ── STAMP (top-right) ── -->
+                <div class="stamp">
+                    <svg viewBox="0 0 70 85" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="perf" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+                                <circle cx="3" cy="3" r="2.2" fill="white" />
+                            </pattern>
+                        </defs>
+                        <!-- Perforated border mask -->
+                        <rect x="0" y="0" width="70" height="85" fill="url(#perf)" />
+                        <!-- Stamp body -->
+                        <rect x="5" y="5" width="60" height="75" fill="#f5e8d8" />
+                        <!-- Inner border -->
+                        <rect x="8" y="8" width="54" height="69" fill="none" stroke="rgba(180,120,60,.4)"
+                            stroke-width=".8" />
+                        <!-- Illustration area -->
+                        <rect x="10" y="10" width="50" height="45" fill="#fce8ed" />
+                        <!-- Little heart illustration -->
+                        <text x="35" y="40" text-anchor="middle" font-size="26" fill="#c94060">♥</text>
+                        <!-- "LOVE" text -->
+                        <text x="35" y="64" text-anchor="middle" font-family="Georgia,serif" font-weight="bold"
+                            font-size="8" fill="#8b3a20" letter-spacing="2">LOVE</text>
+                        <!-- Value -->
+                        <text x="35" y="74" text-anchor="middle" font-family="Georgia,serif" font-size="7"
+                            fill="rgba(100,50,30,.6)">Forever</text>
+                    </svg>
+                </div>
+
+                <!-- ── POSTMARK ── -->
+                <div class="postmark">
+                    <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" opacity=".55">
+                        <circle cx="45" cy="45" r="42" fill="none" stroke="rgba(80,30,20,.7)" stroke-width="2" />
+                        <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(80,30,20,.5)" stroke-width="1" />
+                        <!-- Wavy cancel lines -->
+                        <path d="M0,38 Q22,32 45,38 Q68,44 90,38" fill="none" stroke="rgba(80,30,20,.6)"
+                            stroke-width="1.8" />
+                        <path d="M0,45 Q22,39 45,45 Q68,51 90,45" fill="none" stroke="rgba(80,30,20,.6)"
+                            stroke-width="1.8" />
+                        <path d="M0,52 Q22,46 45,52 Q68,58 90,52" fill="none" stroke="rgba(80,30,20,.6)"
+                            stroke-width="1.8" />
+                        <text x="45" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="7"
+                            fill="rgba(80,30,20,.8)" letter-spacing="2">FROM THE</text>
+                        <text x="45" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="7"
+                            fill="rgba(80,30,20,.8)" letter-spacing="2">HEART ♥</text>
+                    </svg>
+                </div>
+
+                <!-- ── RIBBON CROSS ── -->
+                <div class="ribbon-h" id="ribH"></div>
+                <div class="ribbon-v" id="ribV"></div>
+
+                <!-- ── WAX SEAL ── -->
+                <div class="wax-wrap" id="waxWrap">
+                    <svg viewBox="0 0 76 76" xmlns="http://www.w3.org/2000/svg"
+                        style="animation:sealPulse 3s ease infinite;">
+                        <defs>
+                            <radialGradient id="waxGrad" cx="38%" cy="30%">
+                                <stop offset="0%" stop-color="#e06080" />
+                                <stop offset="50%" stop-color="#9b1c35" />
+                                <stop offset="100%" stop-color="#5a0d1e" />
+                            </radialGradient>
+                            <radialGradient id="waxShine" cx="35%" cy="28%">
+                                <stop offset="0%" stop-color="rgba(255,200,180,.35)" />
+                                <stop offset="100%" stop-color="rgba(255,200,180,.0)" />
+                            </radialGradient>
+                        </defs>
+                        <!-- Outer drip ring -->
+                        <circle cx="38" cy="38" r="37" fill="#4a0a18" opacity=".6" />
+                        <!-- Main wax body -->
+                        <circle cx="38" cy="38" r="34" fill="url(#waxGrad)" />
+                        <!-- Wax drip blobs -->
+                        <ellipse cx="12" cy="30" rx="5" ry="4" fill="#7a1528" opacity=".8"
+                            transform="rotate(-20,12,30)" />
+                        <ellipse cx="62" cy="20" rx="4" ry="5" fill="#7a1528" opacity=".75"
+                            transform="rotate(15,62,20)" />
+                        <ellipse cx="68" cy="52" rx="5" ry="3" fill="#7a1528" opacity=".7"
+                            transform="rotate(30,68,52)" />
+                        <ellipse cx="15" cy="58" rx="4" ry="5" fill="#7a1528" opacity=".8"
+                            transform="rotate(-10,15,58)" />
+                        <!-- Gold embossed outer ring -->
+                        <circle cx="38" cy="38" r="30" fill="none" stroke="rgba(212,168,75,.7)" stroke-width="1.5" />
+                        <!-- Inner decorative ring -->
+                        <circle cx="38" cy="38" r="24" fill="none" stroke="rgba(212,168,75,.4)" stroke-width=".8" />
+                        <!-- Monogram area -->
+                        <circle cx="38" cy="38" r="18" fill="rgba(120,20,40,.3)" />
+                        <!-- Large ornate heart -->
+                        <text x="38" y="45" text-anchor="middle" font-size="22" fill="rgba(255,210,170,.9)"
+                            font-family="Georgia,serif">♥</text>
+                        <!-- Tiny flourishes around monogram -->
+                        <text x="38" y="20" text-anchor="middle" font-size="6" fill="rgba(212,168,75,.7)"
+                            font-family="Georgia,serif">✦</text>
+                        <text x="38" y="58" text-anchor="middle" font-size="6" fill="rgba(212,168,75,.7)"
+                            font-family="Georgia,serif">✦</text>
+                        <text x="20" y="41" text-anchor="middle" font-size="5" fill="rgba(212,168,75,.6)"
+                            font-family="Georgia,serif">✦</text>
+                        <text x="56" y="41" text-anchor="middle" font-size="5" fill="rgba(212,168,75,.6)"
+                            font-family="Georgia,serif">✦</text>
+                        <!-- Shine overlay -->
+                        <circle cx="38" cy="38" r="34" fill="url(#waxShine)" />
+                    </svg>
+
+                    <!-- Crack SVG (shown on click) -->
+                    <div class="wax-crack" id="waxCrack">
+                        <svg viewBox="0 0 76 76" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M38,10 L42,30 L55,25 L44,38 L62,42 L44,44 L50,65 L38,48 L28,68 L32,45 L14,44 L34,38 L20,28 L36,32 Z"
+                                fill="none" stroke="rgba(255,200,150,.8)" stroke-width="1.2" />
+                            <path d="M38,38 L50,22" stroke="rgba(255,220,180,.6)" stroke-width=".8" />
+                            <path d="M38,38 L22,28" stroke="rgba(255,220,180,.5)" stroke-width=".8" />
+                            <path d="M38,38 L42,55" stroke="rgba(255,220,180,.6)" stroke-width=".8" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Paper letter peek -->
+                <div class="letter-peek" id="letterPeek">
+                    <div class="lp-inner"></div>
+                </div>
+
+            </div><!-- end env-wrap -->
+        </div><!-- end env-scene -->
+        <div class="tap-hint" id="tapHint">Click the wax seal to open ↑</div>
+    </section>
+
+    <!-- LETTER MODAL -->
+    <div id="letter-modal">
+        <div class="letter-paper">
+            <div class="paper-lines"></div>
+            <div class="paper-margin"></div>
+            <div class="letter-inner">
+                <div class="l-dateline" id="lDate"></div>
+                <div class="l-greeting" id="lGreet"></div>
+                <p class="l-p" data-delay="0">There are <span class="hl">some people</span> who walk into your life and
+                    quietly rearrange everything — not with grand gestures, but with the small, steady warmth of their
+                    presence. You are that person for me. You always have been.</p>
+                <div class="l-divider" data-delay="80">
+                    <div class="l-div-line"></div>
+                    <div class="l-div-icon">✦</div>
+                    <div class="l-div-line"></div>
+                </div>
+                <p class="l-p" data-delay="140">I've been trying to find the right words for a while. Some feelings are
+                    too wide for sentences — they spill out the sides before you can pin them down. But I wanted to try,
+                    because you deserve to know how <span class="hl">deeply seen</span> you make me feel, simply by
+                    being yourself.</p>
+                <div class="memory-row">
+                    <div class="mem-card" style="--r:-4deg" data-delay="220">
+                        <div class="mem-img">🌙</div>
+                        <div class="mem-caption">late-night conversations</div>
+                    </div>
+                    <div class="mem-card" style="--r:2.5deg" data-delay="320">
+                        <div class="mem-img">☕</div>
+                        <div class="mem-caption">mornings made better</div>
+                    </div>
+                    <div class="mem-card" style="--r:-1.5deg" data-delay="420">
+                        <div class="mem-img">🌧️</div>
+                        <div class="mem-caption">rainy days, warm hearts</div>
+                    </div>
+                    <div class="mem-card" style="--r:3deg" data-delay="480">
+                        <div class="mem-img">✨</div>
+                        <div class="mem-caption">small magic, every day</div>
+                    </div>
+                </div>
+                <div class="l-divider" data-delay="520">
+                    <div class="l-div-line"></div>
+                    <div class="l-div-icon">✦</div>
+                    <div class="l-div-line"></div>
+                </div>
+                <div class="l-quote" data-delay="570">
+                    <div class="l-quote-text">"The best thing to hold onto in life is each other."</div>
+                    <div class="l-quote-attr">— Audrey Hepburn</div>
+                </div>
+                <p class="l-p" data-delay="620">I think about the small things the most. The way you laugh at your own
+                    jokes a half-second before anyone else does. The way you listen — really listen — like every word
+                    actually matters. The quiet comfort of knowing <span class="hl">you exist</span> in the same world
+                    as me.</p>
+                <div class="love-list" data-delay="700">
+                    <div class="love-list-title">a few things I love about you</div>
+                    <div class="love-item">The way you make ordinary moments feel worth remembering</div>
+                    <div class="love-item">How kind you are — not just to me, but to everyone around you</div>
+                    <div class="love-item">The sound of your laugh when something genuinely surprises you</div>
+                    <div class="love-item">That you never make anyone feel small or unseen</div>
+                    <div class="love-item">The warmth you carry everywhere, even on your hardest days</div>
+                    <div class="love-item">The way your eyes light up when you talk about things you love</div>
+                </div>
+                <p class="l-p" data-delay="780">I don't say all of this enough. Life gets loud and days get full. So
+                    here it is, written down, so you can keep it — <span class="hl">you matter to me</span>, more than
+                    any sentence I could write will ever fully capture.</p>
+                <div class="l-divider" data-delay="840">
+                    <div class="l-div-line"></div>
+                    <div class="l-div-icon">✦</div>
+                    <div class="l-div-line"></div>
+                </div>
+                <div class="l-poem" data-delay="900">
+                    <div class="poem-line">In all the noise, you are my quiet.</div>
+                    <div class="poem-line">In all the rush, you are my still.</div>
+                    <div class="poem-line">In all the grey, you are my colour.</div>
+                    <div class="poem-line bold">In all the world, you are my favourite.</div>
+                </div>
+                <div class="bear-section" data-delay="960"><img class="bear-img"
+                        src="https://media.tenor.com/OYg2J0vE7VQAAAAi/cute-bear.gif" alt="bear">
+                    <div class="bear-label">a tiny bear, just for you 🐻</div>
+                </div>
+                <div class="l-divider" data-delay="1000">
+                    <div class="l-div-line"></div>
+                    <div class="l-div-icon">✦</div>
+                    <div class="l-div-line"></div>
+                </div>
+                <p class="l-p" data-delay="1040">Thank you for being you. Thank you for letting me be part of your
+                    world. And thank you for reading this all the way to the end — it means absolutely everything.</p>
+                <div class="l-sig" data-delay="1100">
+                    <div class="sig-label">with all my love,</div>
+                    <div class="sig-name">Always yours</div>
+                    <div class="sig-hearts">❤️ ❤️ ❤️</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <h2>Yaaay! &#127881;</h2>
-            <p>Best decision ever. Date confirmed &#x2764;&#xFE0F;</p>
-        </div>
-    </div>
+    <button id="closeBtn">← back</button>
 
-    <script src="script.js"></script>
+    <script>
+        // Date
+        document.getElementById('lDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        // Burst
+        const bs = document.createElement('style');
+        bs.textContent = '@keyframes burstOut{0%{transform:translate(-50%,-50%) scale(0) rotate(var(--rot));opacity:1;}70%{opacity:1;}100%{transform:translate(calc(-50% + var(--bx)),calc(-50% + var(--by))) scale(.15) rotate(var(--rot));opacity:0;}}';
+        document.head.appendChild(bs);
+
+        // Cursor + trail
+        const cur = document.getElementById('cur'), tc = document.getElementById('tc'), tctx = tc.getContext('2d');
+        tc.width = innerWidth; tc.height = innerHeight;
+        let mx = innerWidth / 2, my = innerHeight / 2;
+        const trails = [];
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+            if (Math.random() < .28) trails.push({ x: mx, y: my, r: Math.random() * 3 + 1.5, life: 1, vx: (Math.random() - .5) * .8, vy: -Math.random() * 1.4 - .3 });
+        });
+        document.querySelectorAll('button,.mem-card,.env-wrap').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('big'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+        });
+        function drawTrail() {
+            tctx.clearRect(0, 0, tc.width, tc.height);
+            for (let i = trails.length - 1; i >= 0; i--) {
+                const t = trails[i]; t.x += t.vx; t.y += t.vy; t.life -= .026;
+                if (t.life <= 0) { trails.splice(i, 1); continue; }
+                tctx.globalAlpha = t.life * .42; tctx.fillStyle = '#c94060';
+                const s = t.r, x = t.x, y = t.y;
+                tctx.beginPath(); tctx.moveTo(x, y + s * .4);
+                tctx.bezierCurveTo(x, y, x - s, y, x - s, y - s * .5);
+                tctx.bezierCurveTo(x - s, y - s * 1.2, x, y - s * 1.2, x, y - s * .5);
+                tctx.bezierCurveTo(x, y - s * 1.2, x + s, y - s * 1.2, x + s, y - s * .5);
+                tctx.bezierCurveTo(x + s, y, x, y, x, y + s * .4);
+                tctx.fill(); tctx.globalAlpha = 1;
+            }
+            requestAnimationFrame(drawTrail);
+        }
+        drawTrail();
+
+        // BG particles
+        const bgc = document.getElementById('bgc'), ctx = bgc.getContext('2d');
+        bgc.width = innerWidth; bgc.height = innerHeight;
+        class P {
+            constructor() { this.reset(true); }
+            reset(init = false) {
+                this.x = Math.random() * bgc.width; this.y = init ? Math.random() * bgc.height : bgc.height + 10;
+                this.s = Math.random() * 2.5 + .4; this.vy = -(Math.random() * .3 + .07); this.vx = (Math.random() - .5) * .2;
+                this.op = Math.random() * .45 + .08; this.wb = Math.random() * Math.PI * 2; this.wbs = Math.random() * .013 + .004;
+                this.type = Math.random() < .28 ? 'h' : 'c'; this.hue = Math.random() < .65 ? 0 : 35; this.ph = Math.random() * Math.PI * 2;
+            }
+            draw() {
+                const p = Math.sin(Date.now() * .0018 + this.ph) * .18 + .82;
+                ctx.globalAlpha = this.op * p; ctx.fillStyle = this.hue === 0 ? 'hsl(348,60%,58%)' : 'hsl(38,65%,60%)';
+                if (this.type === 'h') {
+                    const s = this.s, x = this.x, y = this.y; ctx.beginPath(); ctx.moveTo(x, y + s * .4);
+                    ctx.bezierCurveTo(x, y, x - s, y, x - s, y - s * .5); ctx.bezierCurveTo(x - s, y - s * 1.2, x, y - s * 1.2, x, y - s * .5);
+                    ctx.bezierCurveTo(x, y - s * 1.2, x + s, y - s * 1.2, x + s, y - s * .5); ctx.bezierCurveTo(x + s, y, x, y, x, y + s * .4); ctx.fill();
+                } else { ctx.beginPath(); ctx.arc(this.x, this.y, this.s * .55, 0, Math.PI * 2); ctx.fill(); }
+                ctx.globalAlpha = 1;
+            }
+            update() { this.wb += this.wbs; this.x += this.vx + Math.sin(this.wb) * .22; this.y += this.vy; if (this.y < -10) this.reset(); }
+        }
+        const orbs = [{ fx: .15, fy: .25, r: 300, col: '201,64,96', op: .075, sp: .00025 }, { fx: .85, fy: .55, r: 240, col: '200,146,58', op: .04, sp: .0003 }, { fx: .5, fy: .85, r: 340, col: '140,20,45', op: .09, sp: .00015 }];
+        const parts = []; for (let i = 0; i < 110; i++)parts.push(new P());
+        function drawBg() {
+            ctx.clearRect(0, 0, bgc.width, bgc.height);
+            const bg = ctx.createRadialGradient(bgc.width / 2, bgc.height / 2, 0, bgc.width / 2, bgc.height / 2, bgc.width);
+            bg.addColorStop(0, '#1a060e'); bg.addColorStop(1, '#060103');
+            ctx.fillStyle = bg; ctx.fillRect(0, 0, bgc.width, bgc.height);
+            orbs.forEach(o => {
+                o.fx += Math.sin(Date.now() * o.sp) * .00013; o.fy += Math.cos(Date.now() * o.sp) * .0001;
+                const g = ctx.createRadialGradient(o.fx * bgc.width, o.fy * bgc.height, 0, o.fx * bgc.width, o.fy * bgc.height, o.r);
+                g.addColorStop(0, `rgba(${o.col},${o.op})`); g.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = g; ctx.fillRect(0, 0, bgc.width, bgc.height);
+            });
+            parts.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(drawBg);
+        }
+        drawBg();
+        window.addEventListener('resize', () => { tc.width = innerWidth; tc.height = innerHeight; bgc.width = innerWidth; bgc.height = innerHeight; });
+
+        // 3D tilt on envelope
+        const envScene = document.getElementById('envScene');
+        let tiltOn = false;
+        document.addEventListener('mousemove', e => {
+            if (!tiltOn) return;
+            const r = envScene.getBoundingClientRect();
+            const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+            envScene.style.transform = `perspective(1400px) rotateX(${((e.clientY - cy) / (r.height / 2)) * 8}deg) rotateY(${((e.clientX - cx) / (r.width / 2)) * -8}deg)`;
+        });
+
+        // Burst hearts
+        function burst(x, y, n = 10) {
+            for (let i = 0; i < n; i++) {
+                const el = document.createElement('div');
+                const a = (i / n) * Math.PI * 2, d = 45 + Math.random() * 80, sz = 8 + Math.random() * 12;
+                el.style.cssText = `position:fixed;left:${x}px;top:${y}px;font-size:${sz}px;line-height:1;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);--rot:${Math.random() * 360}deg;--bx:${Math.cos(a) * d}px;--by:${Math.sin(a) * d - 30}px;animation:burstOut .9s ease-out forwards;`;
+                el.textContent = Math.random() < .72 ? '❤' : '✦';
+                el.style.color = Math.random() < .6 ? '#c94060' : '#c8923a';
+                document.body.appendChild(el); setTimeout(() => el.remove(), 920);
+            }
+        }
+        document.addEventListener('click', e => { if (e.target.tagName !== 'BUTTON') burst(e.clientX, e.clientY, 7); });
+
+        // Typewriter
+        function typewrite(el, text, speed = 55, cb) {
+            el.textContent = ''; el.classList.add('typewriter'); let i = 0;
+            const t = setInterval(() => { el.textContent += text[i++]; if (i >= text.length) { clearInterval(t); el.classList.remove('typewriter'); if (cb) cb(); } }, speed);
+        }
+
+        // Scroll reveal
+        function revealItems() {
+            const modal = document.getElementById('letter-modal');
+            const items = modal.querySelectorAll('.l-p,.l-divider,.l-quote,.love-list,.l-poem,.bear-section,.l-sig,.mem-card');
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('vis'), parseInt(e.target.dataset.delay || 0) * .55); obs.unobserve(e.target); }
+                });
+            }, { threshold: .12, rootMargin: '0px 0px -20px 0px', root: modal });
+            items.forEach(el => obs.observe(el));
+        }
+
+        // Nav
+        const hero = document.getElementById('hero'), stage = document.getElementById('stage'),
+            envWrap = document.getElementById('envWrap'), waxWrap = document.getElementById('waxWrap'),
+            waxCrack = document.getElementById('waxCrack'), ribH = document.getElementById('ribH'),
+            ribV = document.getElementById('ribV'), tapHint = document.getElementById('tapHint'),
+            letterModal = document.getElementById('letter-modal'), closeBtn = document.getElementById('closeBtn');
+        let opened = false, modalOpen = false;
+
+        document.getElementById('openBtn').addEventListener('click', e => {
+            burst(e.clientX, e.clientY, 16);
+            hero.classList.add('out');
+            setTimeout(() => { stage.classList.add('on'); tiltOn = true; }, 1000);
+            closeBtn.classList.add('on');
+        });
+
+        // Click wax seal to open
+        waxWrap.addEventListener('click', e => {
+            if (opened) return; opened = true;
+            // Crack animation
+            waxCrack.classList.add('show');
+            burst(e.clientX, e.clientY, 24);
+            // Shatter seal + cut ribbon
+            setTimeout(() => {
+                waxWrap.style.transition = 'all .7s cubic-bezier(.34,1.4,.64,1)';
+                waxWrap.style.transform = 'scale(.35) rotate(22deg) translateY(130px)';
+                waxWrap.style.opacity = '0';
+                ribH.classList.add('cut'); ribV.classList.add('cut');
+                tapHint.classList.add('gone');
+            }, 250);
+            // Open flap + paper rises
+            setTimeout(() => { envWrap.classList.add('open'); }, 600);
+            // Transition to letter
+            setTimeout(() => {
+                stage.classList.remove('on'); tiltOn = false; envScene.style.transform = '';
+                setTimeout(() => {
+                    letterModal.classList.add('show'); modalOpen = true;
+                    typewrite(document.getElementById('lGreet'), 'My Dearest,', 68);
+                    revealItems();
+                }, 300);
+            }, 1800);
+        });
+
+        closeBtn.addEventListener('click', () => {
+            if (modalOpen) {
+                letterModal.classList.remove('show'); modalOpen = false;
+                setTimeout(() => {
+                    stage.classList.add('on'); tiltOn = true;
+                    envWrap.classList.remove('open');
+                    waxWrap.style.transform = ''; waxWrap.style.opacity = '1';
+                    waxCrack.classList.remove('show');
+                    ribH.classList.remove('cut'); ribV.classList.remove('cut');
+                    opened = false; tapHint.classList.remove('gone');
+                    document.querySelectorAll('.l-p,.l-divider,.l-quote,.love-list,.l-poem,.bear-section,.l-sig,.mem-card').forEach(el => el.classList.remove('vis'));
+                }, 650);
+            } else {
+                stage.classList.remove('on'); tiltOn = false; envScene.style.transform = '';
+                setTimeout(() => hero.classList.remove('out'), 200);
+                closeBtn.classList.remove('on');
+                opened = false; tapHint.classList.remove('gone');
+                envWrap.classList.remove('open');
+                waxWrap.style.transform = ''; waxWrap.style.opacity = '1';
+                waxCrack.classList.remove('show');
+                ribH.classList.remove('cut'); ribV.classList.remove('cut');
+            }
+        });
+    </script>
 </body>
 
 </html>

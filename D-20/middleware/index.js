@@ -15,7 +15,7 @@ function middleWare2(req, res, next) {
     next()
 }
 function logFIle(req, res, next) {
-    const log = `${Date.now()} Get request from the browser Method :${req.method} ,Path :${req.path}`
+    const log = `${Date.now()} Get request from the browser Method :${req.method} ,Path :${req.path} \n`
     fs.appendFileSync("log.txt", log, "utf-8")
     next()
 }
@@ -31,4 +31,8 @@ app.get('/getUserData', middleWare1, middleWare2, logFIle, (req, res) => {
     console.log(log)
     console.log("Hello Word")
     return res.status(200).json({ sucess: true, message: "After Middleware 1 pass next" })
+})
+
+app.get('/home', logFIle,(req, res) => {
+    return res.status(200).json({Status:"OK",sucess:true,message:"Response geted"})
 })

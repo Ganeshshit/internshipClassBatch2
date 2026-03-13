@@ -1,93 +1,51 @@
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const popup = document.getElementById("popup");
-const closePopup = document.getElementById("closePopup");
+const openBtn = document.getElementById("openLetter")
+const envelope = document.getElementById("envelope")
 
-function moveNoButton() {
-    const padding = 20;
+openBtn.onclick = () => {
 
-    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+    document.querySelector(".hero").style.display = "none"
 
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
+    document.querySelector(".letter-section").style.pointerEvents = "auto"
 
-    noBtn.style.position = "fixed";
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
+    envelope.classList.add("open")
+
 }
 
-noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("click", moveNoButton);
 
-window.addEventListener("touchstart", (e) => {
-    const touch = e.touches[0];
-    const rect = noBtn.getBoundingClientRect();
+// heart cursor
 
-    const dist = Math.hypot(
-        touch.clientX - (rect.left + rect.width / 2),
-        touch.clientY - (rect.top + rect.height / 2)
-    );
+const cursor = document.createElement("div")
+cursor.className = "heart-cursor"
+document.body.appendChild(cursor)
 
-    if (dist < 120) {
-        moveNoButton();
-    }
-});
+document.addEventListener("mousemove", (e) => {
 
-tsParticles.load("tsparticles", {
-    fullScreen: { enable: false },
-    particles: {
-        number: { value: 20 },
-        shape: {
-            type: "image",
-            image: {
-                src: "https://cdn-icons-png.flaticon.com/512/833/833472.png",
-                width: 32,
-                height: 32
-            }
-        },
-        size: { value: 20 },
-        move: {
-            enable: true,
-            speed: 1,
-            direction: "top",
-            outModes: { default: "out" }
-        },
-        opacity: { value: 0.7 }
-    }
-});
+    cursor.style.left = e.clientX + "px"
+    cursor.style.top = e.clientY + "px"
 
-function fireConfetti() {
-    const duration = 2000;
-    const end = Date.now() + duration;
+})
 
-    (function frame() {
-        confetti({
-            particleCount: 6,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 }
-        });
-        confetti({
-            particleCount: 6,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 }
-        });
 
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
-        }
-    })();
+// floating hearts background
+
+const heartContainer = document.getElementById("hearts")
+
+function createHeart() {
+
+    const heart = document.createElement("div")
+
+    heart.innerHTML = "❤️"
+
+    heart.style.position = "absolute"
+    heart.style.left = Math.random() * 100 + "vw"
+    heart.style.fontSize = Math.random() * 20 + 10 + "px"
+
+    heart.style.animation = "float 6s linear"
+
+    heartContainer.appendChild(heart)
+
+    setTimeout(() => heart.remove(), 6000)
+
 }
 
-yesBtn.addEventListener("click", () => {
-    popup.style.display = "flex";
-    fireConfetti();
-});
-
-popup.addEventListener("click", (e) => {
-    if (e.target === popup) {
-        popup.style.display = "none";
-    }
-});
+setInterval(createHeart, 500)
